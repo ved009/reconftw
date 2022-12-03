@@ -19,117 +19,10 @@ function banner(){
 ################################################### TOOLS #####################################################
 ###############################################################################################################
 
-function check_version(){
-	timeout 10 git fetch &>/dev/null
-	exit_status=$?
-	if [ $exit_status -eq 0 ]; then
-		BRANCH=$(git rev-parse --abbrev-ref HEAD)
-		HEADHASH=$(git rev-parse HEAD)
-		UPSTREAMHASH=$(git rev-parse ${BRANCH}@{upstream})
-		if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
-			printf "\n${yellow} There is a new version, run ./install.sh to get latest version${reset}\n\n"
-		fi
-	else
-		printf "\n${bred} Unable to check updates ${reset}\n\n"
-	fi
-}
-
-function tools_installed(){
-
-	printf "\n\n${bgreen}#######################################################################${reset}\n"
-	printf "${bblue} Checking installed tools ${reset}\n\n"
-
-	allinstalled=true
-
-	[ -n "$GOPATH" ] || { printf "${bred} [*] GOPATH var			[NO]${reset}\n"; allinstalled=false;}
-	[ -n "$GOROOT" ] || { printf "${bred} [*] GOROOT var			[NO]${reset}\n"; allinstalled=false;}
-	[ -n "$PATH" ] || { printf "${bred} [*] PATH var			[NO]${reset}\n"; allinstalled=false;}
-	[ -f "$tools/dorks_hunter/dorks_hunter.py" ] || { printf "${bred} [*] dorks_hunter		[NO]${reset}\n"; allinstalled=false;}
-	[ -f "$tools/brutespray/brutespray.py" ] || { printf "${bred} [*] brutespray			[NO]${reset}\n"; allinstalled=false;}
-	[ -f "$tools/theHarvester/theHarvester.py" ] || { printf "${bred} [*] theHarvester		[NO]${reset}\n"; allinstalled=false;}
-	[ -f "$tools/fav-up/favUp.py" ] || { printf "${bred} [*] fav-up			[NO]${reset}\n"; allinstalled=false;}
-	[ -f "$tools/Corsy/corsy.py" ] || { printf "${bred} [*] Corsy			[NO]${reset}\n"; allinstalled=false;}
-	[ -f "$tools/testssl.sh/testssl.sh" ] || { printf "${bred} [*] testssl			[NO]${reset}\n"; allinstalled=false;}
-	[ -f "$tools/CMSeeK/cmseek.py" ] || { printf "${bred} [*] CMSeeK			[NO]${reset}\n"; allinstalled=false;}
-	[ -f "$tools/ctfr/ctfr.py" ] || { printf "${bred} [*] ctfr			[NO]${reset}\n"; allinstalled=false;}
-	[ -f "$tools/fuzz_wordlist.txt" ] || { printf "${bred} [*] OneListForAll		[NO]${reset}\n"; allinstalled=false;}
-	[ -f "$tools/xnLinkFinder/xnLinkFinder.py" ] || { printf "${bred} [*] xnLinkFinder		[NO]${reset}\n"; allinstalled=false;}
-	[ -f "$tools/commix/commix.py" ] || { printf "${bred} [*] commix			[NO]${reset}\n"; allinstalled=false;}
-	[ -f "$tools/getjswords.py" ] || { printf "${bred} [*] getjswords   		[NO]${reset}\n"; allinstalled=false;}
-	[ -f "$tools/JSA/jsa.py" ] || { printf "${bred} [*] JSA			[NO]${reset}\n"; allinstalled=false;}
-	[ -f "$tools/cloud_enum/cloud_enum.py" ] || { printf "${bred} [*] cloud_enum			[NO]${reset}\n"; allinstalled=false;}
-	[ -f "$tools/ultimate-nmap-parser/ultimate-nmap-parser.sh" ] || { printf "${bred} [*] nmap-parse-output		[NO]${reset}\n"; allinstalled=false;}
-	[ -f "$tools/pydictor/pydictor.py" ] || { printf "${bred} [*] pydictor   		[NO]${reset}\n"; allinstalled=false;}
-	[ -f "$tools/urless/urless.py" ] || { printf "${bred} [*] urless			[NO]${reset}\n"; allinstalled=false;}
-	[ -f "$tools/smuggler/smuggler.py" ] || { printf "${bred} [*] smuggler			[NO]${reset}\n"; allinstalled=false;}
-	which github-endpoints &>/dev/null || { printf "${bred} [*] github-endpoints		[NO]${reset}\n"; allinstalled=false;}
-	which github-subdomains &>/dev/null || { printf "${bred} [*] github-subdomains		[NO]${reset}\n"; allinstalled=false;}
-	which gospider &>/dev/null || { printf "${bred} [*] gospider			[NO]${reset}\n"; allinstalled=false;}
-	which wafw00f &>/dev/null || { printf "${bred} [*] wafw00f			[NO]${reset}\n"; allinstalled=false;}
-	which dnsvalidator &>/dev/null || { printf "${bred} [*] dnsvalidator		[NO]${reset}\n"; allinstalled=false;}
-	which gowitness &>/dev/null || { printf "${bred} [*] gowitness			[NO]${reset}\n"; allinstalled=false;}
-	which amass &>/dev/null || { printf "${bred} [*] Amass			[NO]${reset}\n"; allinstalled=false;}
-	which waybackurls &>/dev/null || { printf "${bred} [*] Waybackurls		[NO]${reset}\n"; allinstalled=false;}
-	which gau &>/dev/null || { printf "${bred} [*] gau			[NO]${reset}\n"; allinstalled=false;}
-	which dnsx &>/dev/null || { printf "${bred} [*] dnsx			[NO]${reset}\n"; allinstalled=false;}
-	which gotator &>/dev/null || { printf "${bred} [*] gotator			[NO]${reset}\n"; allinstalled=false;}
-	which nuclei &>/dev/null || { printf "${bred} [*] Nuclei			[NO]${reset}\n"; allinstalled=false;}
-	[ -d ~/nuclei-templates ] || { printf "${bred} [*] Nuclei templates	[NO]${reset}\n"; allinstalled=false;}
-	which gf &>/dev/null || { printf "${bred} [*] Gf				[NO]${reset}\n"; allinstalled=false;}
-	which Gxss &>/dev/null || { printf "${bred} [*] Gxss			[NO]${reset}\n"; allinstalled=false;}
-	which subjs &>/dev/null || { printf "${bred} [*] subjs			[NO]${reset}\n"; allinstalled=false;}
-	which ffuf &>/dev/null || { printf "${bred} [*] ffuf			[NO]${reset}\n"; allinstalled=false;}
-	which massdns &>/dev/null || { printf "${bred} [*] Massdns			[NO]${reset}\n"; allinstalled=false;}
-	which qsreplace &>/dev/null || { printf "${bred} [*] qsreplace			[NO]${reset}\n"; allinstalled=false;}
-	which rush &>/dev/null || { printf "${bred} [*] rush			[NO]${reset}\n"; allinstalled=false;}
-	which anew &>/dev/null || { printf "${bred} [*] Anew			[NO]${reset}\n"; allinstalled=false;}
-	which unfurl &>/dev/null || { printf "${bred} [*] unfurl			[NO]${reset}\n"; allinstalled=false;}
-	which crlfuzz &>/dev/null || { printf "${bred} [*] crlfuzz			[NO]${reset}\n"; allinstalled=false;}
-	which httpx &>/dev/null || { printf "${bred} [*] Httpx			[NO]${reset}\n${reset}"; allinstalled=false;}
-	which jq &>/dev/null || { printf "${bred} [*] jq				[NO]${reset}\n${reset}"; allinstalled=false;}
-	which notify &>/dev/null || { printf "${bred} [*] notify			[NO]${reset}\n${reset}"; allinstalled=false;}
-	which dalfox &>/dev/null || { printf "${bred} [*] dalfox			[NO]${reset}\n${reset}"; allinstalled=false;}
-	which puredns &>/dev/null || { printf "${bred} [*] puredns			[NO]${reset}\n${reset}"; allinstalled=false;}
-	which unimap &>/dev/null || { printf "${bred} [*] unimap			[NO]${reset}\n${reset}"; allinstalled=false;}
-	which emailfinder &>/dev/null || { printf "${bred} [*] emailfinder		[NO]${reset}\n"; allinstalled=false;}
-	which analyticsrelationships &>/dev/null || { printf "${bred} [*] analyticsrelationships	[NO]${reset}\n"; allinstalled=false;}
-	which mapcidr &>/dev/null || { printf "${bred} [*] mapcidr			[NO]${reset}\n"; allinstalled=false;}
-	which ppfuzz &>/dev/null || { printf "${bred} [*] ppfuzz			[NO]${reset}\n"; allinstalled=false;}
-	which searchsploit &>/dev/null || { printf "${bred} [*] searchsploit		[NO]${reset}\n"; allinstalled=false;}
-	which ipcdn &>/dev/null || { printf "${bred} [*] ipcdn			[NO]${reset}\n"; allinstalled=false;}
-	which interactsh-client &>/dev/null || { printf "${bred} [*] interactsh-client		[NO]${reset}\n"; allinstalled=false;}
-	which tlsx &>/dev/null || { printf "${bred} [*] tlsx			[NO]${reset}\n"; allinstalled=false;}
-	which bbrf &>/dev/null || { printf "${bred} [*] bbrf			[NO]${reset}\n"; allinstalled=false;}
-	which smap &>/dev/null || { printf "${bred} [*] smap			[NO]${reset}\n"; allinstalled=false;}
-	which gitdorks_go &>/dev/null || { printf "${bred} [*] gitdorks_go		[NO]${reset}\n"; allinstalled=false;}
-	which ripgen &>/dev/null || { printf "${bred} [*] ripgen			[NO]${reset}\n${reset}"; allinstalled=false;}
-	which dsieve &>/dev/null || { printf "${bred} [*] dsieve			[NO]${reset}\n${reset}"; allinstalled=false;}
-	which inscope &>/dev/null || { printf "${bred} [*] inscope			[NO]${reset}\n${reset}"; allinstalled=false;}
-	which enumerepo &>/dev/null || { printf "${bred} [*] enumerepo			[NO]${reset}\n${reset}"; allinstalled=false;}
-	which trufflehog &>/dev/null || { printf "${bred} [*] trufflehog			[NO]${reset}\n${reset}"; allinstalled=false;}
-	which Web-Cache-Vulnerability-Scanner &>/dev/null || { printf "${bred} [*] Web-Cache-Vulnerability-Scanner [NO]${reset}\n"; allinstalled=false;}
-	which subfinder &>/dev/null || { printf "${bred} [*] subfinder			[NO]${reset}\n${reset}"; allinstalled=false;}
-
-	if [ "${allinstalled}" = true ]; then
-		printf "${bgreen} Good! All installed! ${reset}\n\n"
-	else
-		printf "\n${yellow} Try running the installer script again ./install.sh"
-		printf "\n${yellow} If it fails for any reason try to install manually the tools missed"
-		printf "\n${yellow} Finally remember to set the ${bred}\$tools${yellow} variable at the start of this script"
-		printf "\n${yellow} If nothing works and the world is gonna end you can always ping me :D ${reset}\n\n"
-	fi
-
-	printf "${bblue} Tools check finished\n"
-	printf "${bgreen}#######################################################################\n${reset}"
-}
-
-###############################################################################################################
-################################################### OSINT #####################################################
-###############################################################################################################
-
 function google_dorks(){
 	if { [ ! -f "$called_fn_dir/.${FUNCNAME[0]}" ] || [ "$DIFF" = true ]; } && [ "$GOOGLE_DORKS" = true ] && [ "$OSINT" = true ]; then
-		python3 $tools/dorks_hunter/dorks_hunter.py -d $domain -o osint/dorks.txt
+		start_func ${FUNCNAME[0]} "Google Dorks in process"
+		modules/osint/google_dorks.sh -d $domain -o osint/dorks.txt
 		end_func "Results are saved in $domain/osint/dorks.txt" ${FUNCNAME[0]}
 	else
 		if [ "$GOOGLE_DORKS" = false ] || [ "$OSINT" = false ]; then
@@ -143,14 +36,10 @@ function google_dorks(){
 function github_dorks(){
 	if { [ ! -f "$called_fn_dir/.${FUNCNAME[0]}" ] || [ "$DIFF" = true ]; } && [ "$GITHUB_DORKS" = true ] && [ "$OSINT" = true ]; then
 		start_func ${FUNCNAME[0]} "Github Dorks in process"
-		if [ -s "${GITHUB_TOKENS}" ]; then
-			if [ "$DEEP" = true ]; then
-				gitdorks_go -gd $tools/gitdorks_go/Dorks/medium_dorks.txt -nws 20 -target $domain -tf "${GITHUB_TOKENS}" -ew 3 | anew -q osint/gitdorks.txt
-			else
-				gitdorks_go -gd $tools/gitdorks_go/Dorks/smalldorks.txt -nws 20 -target $domain -tf "${GITHUB_TOKENS}" -ew 3 | anew -q osint/gitdorks.txt
-			fi
+		if [ "$DEEP" = true ]; then
+			modules/osint/github_dorks.sh -g $tools/gitdorks_go/Dorks/medium_dorks.txt -d $domain -t "${GITHUB_TOKENS}" | anew -q osint/gitdorks.txt
 		else
-			printf "\n${bred} Required file ${GITHUB_TOKENS} not exists or empty${reset}\n"
+			modules/osint/github_dorks.sh -g $tools/gitdorks_go/Dorks/smalldorks.txt -d $domain -t "${GITHUB_TOKENS}" | anew -q osint/gitdorks.txt
 		fi
 		end_func "Results are saved in $domain/osint/gitdorks.txt" ${FUNCNAME[0]}
 	else
@@ -362,27 +251,7 @@ function subdomains_full(){
 function sub_passive(){
 	if { [ ! -f "$called_fn_dir/.${FUNCNAME[0]}" ] || [ "$DIFF" = true ]; } && [ "$SUBPASSIVE" = true ]; then
 		start_subfunc ${FUNCNAME[0]} "Running : Passive Subdomain Enumeration"
-		if [ ! "$AXIOM" = true ]; then
-			[[ $RUNAMASS == true ]] && amass enum -passive -d $domain -config $AMASS_CONFIG -timeout $AMASS_ENUM_TIMEOUT -json .tmp/amass_json.json 2>>"$LOGFILE" &>/dev/null
-			[ -s ".tmp/amass_json.json" ] && cat .tmp/amass_json.json | jq -r '.name' | anew -q .tmp/amass_psub.txt
-			[[ $RUNSUBFINDER == true ]] && subfinder -all -d $domain -silent | anew -q .tmp/amass_psub.txt
-		else
-			echo $domain > .tmp/amass_temp_axiom.txt
-			[[ $RUNAMASS == true ]] && axiom-scan .tmp/amass_temp_axiom.txt -m amass -passive -o .tmp/amass_axiom.txt $AXIOM_EXTRA_ARGS 2>>"$LOGFILE" &>/dev/null
-			[[ $RUNSUBFINDER == true ]] && axiom-scan .tmp/amass_temp_axiom.txt -m subfinder -all -silent -o .tmp/subfinder_axiom.txt $AXIOM_EXTRA_ARGS 2>>"$LOGFILE" &>/dev/null
-			cat .tmp/amass_axiom.txt .tmp/subfinder_axiom.txt 2>>"$LOGFILE" | anew -q .tmp/amass_psub.txt
-		fi
-		if [ -s "${GITHUB_TOKENS}" ]; then
-			if [ "$DEEP" = true ]; then
-				github-subdomains -d $domain -t $GITHUB_TOKENS -o .tmp/github_subdomains_psub.txt 2>>"$LOGFILE" &>/dev/null
-			else
-				github-subdomains -d $domain -k -q -t $GITHUB_TOKENS -o .tmp/github_subdomains_psub.txt 2>>"$LOGFILE" &>/dev/null
-			fi
-		fi
-		if [ "$INSCOPE" = true ]; then
-			check_inscope .tmp/amass_psub.txt 2>>"$LOGFILE" &>/dev/null
-			check_inscope .tmp/github_subdomains_psub.txt 2>>"$LOGFILE" &>/dev/null
-		fi
+		modules/subdomains/sub_passive.sh -d $domain -o .tmp
 		NUMOFLINES=$(find .tmp -type f -iname "*_psub.txt" -exec cat {} + | sed "s/*.//" | anew .tmp/passive_subs.txt | sed '/^$/d' | wc -l)
 		end_subfunc "${NUMOFLINES} new subs (passive)" ${FUNCNAME[0]}
 	else
