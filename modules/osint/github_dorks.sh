@@ -5,27 +5,16 @@ name=`basename "$0"`
 
 # check if the -h flag is provided
 if [[ "$1" == "-h" ]]; then
-  # display help information
-  echo "Usage: ${name} -d domain -t tokens_file -g gitdorks_file"
-  echo "  Runs gitdorks_go for the given domain"
-  echo ""
-  echo "Usage: ${name} -h"
-  echo "  Shows this help msg"
-  exit 0
-fi
-
-# check if the -h flag is provided
-if [[ "$1" == "-h" ]]; then
   # display improved help information
   echo "Usage: ${name} -d domain -t tokens_file -g gitdorks_file"
   echo ""
   echo "Runs gitdorks_go for the given domain."
   echo ""
   echo "Options:"
-  echo "  -d, --domain          Domain to run dorks_hunter for"
-  echo "  -t, --tokens   		File containing GitHub tokens"
-  echo "  -g, --gitdorks   		File containing GitHub dorks"
-  echo "  -h, --help            Shows this help message"
+  echo "  -d, --domain			Domain to run dorks_hunter for"
+  echo "  -t, --tokens			File containing GitHub tokens"
+  echo "  -g, --gitdorks		File containing GitHub dorks"
+  echo "  -h, --help			Shows this help message"
   exit 0
 fi
 
