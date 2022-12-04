@@ -37,8 +37,8 @@ while [[ $# -gt 0 ]]; do
       shift # past argument
       shift # past value
       ;;
-    -g|--output-folder)
-      gitdorks="$3"
+    -g|--gitdorks)
+      gitdorks="$2"
       shift # past argument
       shift # past value
       ;;
@@ -59,14 +59,14 @@ fi
 # check if arg was provided
 if [[ -z "$tokens" ]]; then
   # display error message if no arg is provided
-  echo "Error: No domain provided. Use ${name} -h for usage information."
+  echo "Error: No tokens file provided. Use ${name} -h for usage information."
   exit 1
 fi
 
 # check if an output folder was provided
 if [[ -z "$gitdorks" ]]; then
   # display error message if no arg is provided
-  echo "Error: No domain provided. Use ${name} -h for usage information."
+  echo "Error: No github dorks file provided. Use ${name} -h for usage information."
   exit 1
 fi
 
