@@ -36,6 +36,8 @@ This is the diffence between an old function and a new independant script. Maybe
 ![image](https://user-images.githubusercontent.com/24670991/205467537-6626c9f2-e099-4f06-9bcb-839bcefe1065.png)
 ![image](https://user-images.githubusercontent.com/24670991/205467480-a0c667fa-d89c-4dcf-a501-cd10ed0aff7c.png)
 
+By now (04/12/22), the scripts modified have been [modules/osint/google_dorks.sh](https://github.com/six2dez/reconftw/blob/modular/modules/osint/google_dorks.sh), [modules/osint/github_dorks.sh](https://github.com/six2dez/reconftw/blob/modular/modules/osint/github_dorks.sh) and [modules/subdomains/sub_passive.sh](https://github.com/six2dez/reconftw/blob/modular/modules/subdomains/sub_passive.sh) and can be used as examples.
+
 # EOF
 From here you can join the Discord channel here: https://discord.gg/R5DdXVEdTy 
 DM me asking for developer role and we'll continue discussing about all this :) Thanks again!
