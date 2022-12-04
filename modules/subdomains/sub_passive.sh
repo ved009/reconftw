@@ -11,9 +11,9 @@ if [[ "$1" == "-h" ]]; then
 	echo "Runs amass and other tools to find subdomains for the given domain and saves the results in the specified folder."
 	echo ""
 	echo "Options:"
-	echo "  -d, --domain          Domain to find subdomains for"
-	echo "  -o, --output-folder   Folder to save the results in (default: .tmp)"
-	echo "  -h, --help            Shows this help message"
+	echo "  -d, --domain			Domain to find subdomains for"
+	echo "  -o, --output-folder		Folder to save the results in (default: .tmp)"
+	echo "  -h, --help				Shows this help message"
 	exit 0
 fi
 
