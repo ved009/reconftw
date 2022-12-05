@@ -19,7 +19,6 @@ fake-useragent          # fav-up
 fastapi                 # theHarvester
 future                  # multiple
 google                  # dorks_hunter
-h8mail                  # Tool
 ipwhois                 # fav-up
 metafinder              # Tool
 mmh3                    # fav-up

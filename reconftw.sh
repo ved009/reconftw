@@ -16,13 +16,137 @@ function banner(){
 }
 
 ###############################################################################################################
+################################################### TOOLS #####################################################
+###############################################################################################################
+
+# Done in v3
+# function check_version(){
+# 	timeout 10 git fetch &>/dev/null
+# 	exit_status=$?
+# 	if [ $exit_status -eq 0 ]; then
+# 		BRANCH=$(git rev-parse --abbrev-ref HEAD)
+# 		HEADHASH=$(git rev-parse HEAD)
+# 		UPSTREAMHASH=$(git rev-parse ${BRANCH}@{upstream})
+# 		if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
+# 			printf "\n${yellow} There is a new version, run ./install.sh to get latest version${reset}\n\n"
+# 		fi
+# 	else
+# 		printf "\n${bred} Unable to check updates ${reset}\n\n"
+# 	fi
+# }
+
+# Done in v3
+# function tools_installed(){
+# 
+# 	printf "\n\n${bgreen}#######################################################################${reset}\n"
+# 	printf "${bblue} Checking installed tools ${reset}\n\n"
+# 
+# 	allinstalled=true
+# 
+# 	[ -n "$GOPATH" ] || { printf "${bred} [*] GOPATH var			[NO]${reset}\n"; allinstalled=false;}
+# 	[ -n "$GOROOT" ] || { printf "${bred} [*] GOROOT var			[NO]${reset}\n"; allinstalled=false;}
+# 	[ -n "$PATH" ] || { printf "${bred} [*] PATH var			[NO]${reset}\n"; allinstalled=false;}
+# 	[ -f "$tools/dorks_hunter/dorks_hunter.py" ] || { printf "${bred} [*] dorks_hunter		[NO]${reset}\n"; allinstalled=false;}
+# 	[ -f "$tools/brutespray/brutespray.py" ] || { printf "${bred} [*] brutespray			[NO]${reset}\n"; allinstalled=false;}
+# 	[ -f "$tools/theHarvester/theHarvester.py" ] || { printf "${bred} [*] theHarvester		[NO]${reset}\n"; allinstalled=false;}
+# 	[ -f "$tools/fav-up/favUp.py" ] || { printf "${bred} [*] fav-up			[NO]${reset}\n"; allinstalled=false;}
+# 	[ -f "$tools/Corsy/corsy.py" ] || { printf "${bred} [*] Corsy			[NO]${reset}\n"; allinstalled=false;}
+# 	[ -f "$tools/testssl.sh/testssl.sh" ] || { printf "${bred} [*] testssl			[NO]${reset}\n"; allinstalled=false;}
+# 	[ -f "$tools/CMSeeK/cmseek.py" ] || { printf "${bred} [*] CMSeeK			[NO]${reset}\n"; allinstalled=false;}
+# 	[ -f "$tools/ctfr/ctfr.py" ] || { printf "${bred} [*] ctfr			[NO]${reset}\n"; allinstalled=false;}
+# 	[ -f "$tools/fuzz_wordlist.txt" ] || { printf "${bred} [*] OneListForAll		[NO]${reset}\n"; allinstalled=false;}
+# 	[ -f "$tools/xnLinkFinder/xnLinkFinder.py" ] || { printf "${bred} [*] xnLinkFinder		[NO]${reset}\n"; allinstalled=false;}
+# 	[ -f "$tools/commix/commix.py" ] || { printf "${bred} [*] commix			[NO]${reset}\n"; allinstalled=false;}
+# 	[ -f "$tools/getjswords.py" ] || { printf "${bred} [*] getjswords   		[NO]${reset}\n"; allinstalled=false;}
+# 	[ -f "$tools/JSA/jsa.py" ] || { printf "${bred} [*] JSA			[NO]${reset}\n"; allinstalled=false;}
+# 	[ -f "$tools/cloud_enum/cloud_enum.py" ] || { printf "${bred} [*] cloud_enum			[NO]${reset}\n"; allinstalled=false;}
+# 	[ -f "$tools/ultimate-nmap-parser/ultimate-nmap-parser.sh" ] || { printf "${bred} [*] nmap-parse-output		[NO]${reset}\n"; allinstalled=false;}
+# 	[ -f "$tools/pydictor/pydictor.py" ] || { printf "${bred} [*] pydictor   		[NO]${reset}\n"; allinstalled=false;}
+# 	[ -f "$tools/urless/urless.py" ] || { printf "${bred} [*] urless			[NO]${reset}\n"; allinstalled=false;}
+# 	[ -f "$tools/smuggler/smuggler.py" ] || { printf "${bred} [*] smuggler			[NO]${reset}\n"; allinstalled=false;}
+# 	[ -f "$tools/regulator/regulator.py" ] || { printf "${bred} [*] regulator			[NO]${reset}\n"; allinstalled=false;}
+# 	which github-endpoints &>/dev/null || { printf "${bred} [*] github-endpoints		[NO]${reset}\n"; allinstalled=false;}
+# 	which github-subdomains &>/dev/null || { printf "${bred} [*] github-subdomains		[NO]${reset}\n"; allinstalled=false;}
+# 	which gospider &>/dev/null || { printf "${bred} [*] gospider			[NO]${reset}\n"; allinstalled=false;}
+# 	which wafw00f &>/dev/null || { printf "${bred} [*] wafw00f			[NO]${reset}\n"; allinstalled=false;}
+# 	which dnsvalidator &>/dev/null || { printf "${bred} [*] dnsvalidator		[NO]${reset}\n"; allinstalled=false;}
+# 	which gowitness &>/dev/null || { printf "${bred} [*] gowitness			[NO]${reset}\n"; allinstalled=false;}
+# 	which amass &>/dev/null || { printf "${bred} [*] Amass			[NO]${reset}\n"; allinstalled=false;}
+# 	which waybackurls &>/dev/null || { printf "${bred} [*] Waybackurls		[NO]${reset}\n"; allinstalled=false;}
+# 	which gau &>/dev/null || { printf "${bred} [*] gau			[NO]${reset}\n"; allinstalled=false;}
+# 	which dnsx &>/dev/null || { printf "${bred} [*] dnsx			[NO]${reset}\n"; allinstalled=false;}
+# 	which gotator &>/dev/null || { printf "${bred} [*] gotator			[NO]${reset}\n"; allinstalled=false;}
+# 	which nuclei &>/dev/null || { printf "${bred} [*] Nuclei			[NO]${reset}\n"; allinstalled=false;}
+# 	[ -d ~/nuclei-templates ] || { printf "${bred} [*] Nuclei templates	[NO]${reset}\n"; allinstalled=false;}
+# 	which gf &>/dev/null || { printf "${bred} [*] Gf				[NO]${reset}\n"; allinstalled=false;}
+# 	which Gxss &>/dev/null || { printf "${bred} [*] Gxss			[NO]${reset}\n"; allinstalled=false;}
+# 	which subjs &>/dev/null || { printf "${bred} [*] subjs			[NO]${reset}\n"; allinstalled=false;}
+# 	which ffuf &>/dev/null || { printf "${bred} [*] ffuf			[NO]${reset}\n"; allinstalled=false;}
+# 	which massdns &>/dev/null || { printf "${bred} [*] Massdns			[NO]${reset}\n"; allinstalled=false;}
+# 	which qsreplace &>/dev/null || { printf "${bred} [*] qsreplace			[NO]${reset}\n"; allinstalled=false;}
+# 	which rush &>/dev/null || { printf "${bred} [*] rush			[NO]${reset}\n"; allinstalled=false;}
+# 	which anew &>/dev/null || { printf "${bred} [*] Anew			[NO]${reset}\n"; allinstalled=false;}
+# 	which unfurl &>/dev/null || { printf "${bred} [*] unfurl			[NO]${reset}\n"; allinstalled=false;}
+# 	which crlfuzz &>/dev/null || { printf "${bred} [*] crlfuzz			[NO]${reset}\n"; allinstalled=false;}
+# 	which httpx &>/dev/null || { printf "${bred} [*] Httpx			[NO]${reset}\n${reset}"; allinstalled=false;}
+# 	which jq &>/dev/null || { printf "${bred} [*] jq				[NO]${reset}\n${reset}"; allinstalled=false;}
+# 	which notify &>/dev/null || { printf "${bred} [*] notify			[NO]${reset}\n${reset}"; allinstalled=false;}
+# 	which dalfox &>/dev/null || { printf "${bred} [*] dalfox			[NO]${reset}\n${reset}"; allinstalled=false;}
+# 	which puredns &>/dev/null || { printf "${bred} [*] puredns			[NO]${reset}\n${reset}"; allinstalled=false;}
+# 	which unimap &>/dev/null || { printf "${bred} [*] unimap			[NO]${reset}\n${reset}"; allinstalled=false;}
+# 	which emailfinder &>/dev/null || { printf "${bred} [*] emailfinder		[NO]${reset}\n"; allinstalled=false;}
+# 	which analyticsrelationships &>/dev/null || { printf "${bred} [*] analyticsrelationships	[NO]${reset}\n"; allinstalled=false;}
+# 	which mapcidr &>/dev/null || { printf "${bred} [*] mapcidr			[NO]${reset}\n"; allinstalled=false;}
+# 	which ppfuzz &>/dev/null || { printf "${bred} [*] ppfuzz			[NO]${reset}\n"; allinstalled=false;}
+# 	which searchsploit &>/dev/null || { printf "${bred} [*] searchsploit		[NO]${reset}\n"; allinstalled=false;}
+# 	which ipcdn &>/dev/null || { printf "${bred} [*] ipcdn			[NO]${reset}\n"; allinstalled=false;}
+# 	which interactsh-client &>/dev/null || { printf "${bred} [*] interactsh-client		[NO]${reset}\n"; allinstalled=false;}
+# 	which tlsx &>/dev/null || { printf "${bred} [*] tlsx			[NO]${reset}\n"; allinstalled=false;}
+# 	which bbrf &>/dev/null || { printf "${bred} [*] bbrf			[NO]${reset}\n"; allinstalled=false;}
+# 	which smap &>/dev/null || { printf "${bred} [*] smap			[NO]${reset}\n"; allinstalled=false;}
+# 	which gitdorks_go &>/dev/null || { printf "${bred} [*] gitdorks_go		[NO]${reset}\n"; allinstalled=false;}
+# 	which ripgen &>/dev/null || { printf "${bred} [*] ripgen			[NO]${reset}\n${reset}"; allinstalled=false;}
+# 	which dsieve &>/dev/null || { printf "${bred} [*] dsieve			[NO]${reset}\n${reset}"; allinstalled=false;}
+# 	which inscope &>/dev/null || { printf "${bred} [*] inscope			[NO]${reset}\n${reset}"; allinstalled=false;}
+# 	which enumerepo &>/dev/null || { printf "${bred} [*] enumerepo			[NO]${reset}\n${reset}"; allinstalled=false;}
+# 	which trufflehog &>/dev/null || { printf "${bred} [*] trufflehog			[NO]${reset}\n${reset}"; allinstalled=false;}
+# 	which Web-Cache-Vulnerability-Scanner &>/dev/null || { printf "${bred} [*] Web-Cache-Vulnerability-Scanner [NO]${reset}\n"; allinstalled=false;}
+# 	which subfinder &>/dev/null || { printf "${bred} [*] subfinder			[NO]${reset}\n${reset}"; allinstalled=false;}
+# 
+# 	if [ "${allinstalled}" = true ]; then
+# 		printf "${bgreen} Good! All installed! ${reset}\n\n"
+# 	else
+# 		printf "\n${yellow} Try running the installer script again ./install.sh"
+# 		printf "\n${yellow} If it fails for any reason try to install manually the tools missed"
+# 		printf "\n${yellow} Finally remember to set the ${bred}\$tools${yellow} variable at the start of this script"
+# 		printf "\n${yellow} If nothing works and the world is gonna end you can always ping me :D ${reset}\n\n"
+# 	fi
+# 
+# 	printf "${bblue} Tools check finished\n"
+# 	printf "${bgreen}#######################################################################\n${reset}"
+# }
+
+###############################################################################################################
 ################################################### OSINT #####################################################
 ###############################################################################################################
 
+# Done in v3
+# function google_dorks(){
+# 	if { [ ! -f "$called_fn_dir/.${FUNCNAME[0]}" ] || [ "$DIFF" = true ]; } && [ "$GOOGLE_DORKS" = true ] && [ "$OSINT" = true ]; then
+# 		python3 $tools/dorks_hunter/dorks_hunter.py -d $domain -o osint/dorks.txt
+# 		end_func "Results are saved in $domain/osint/dorks.txt" ${FUNCNAME[0]}
+# 	else
+# 		if [ "$GOOGLE_DORKS" = false ] || [ "$OSINT" = false ]; then
+# 			printf "\n${yellow} ${FUNCNAME[0]} skipped in this mode or defined in reconftw.cfg ${reset}\n"
+# 		else
+# 			printf "${yellow} ${FUNCNAME[0]} are already processed, to force executing ${FUNCNAME[0]} delete\n    $called_fn_dir/.${FUNCNAME[0]} ${reset}\n\n"
+# 		fi
+# 	fi
+# }
+
 function google_dorks(){
 	if { [ ! -f "$called_fn_dir/.${FUNCNAME[0]}" ] || [ "$DIFF" = true ]; } && [ "$GOOGLE_DORKS" = true ] && [ "$OSINT" = true ]; then
-		start_func ${FUNCNAME[0]} "Google Dorks in process"
-		modules/osint/google_dorks.sh -d $domain -o osint/dorks.txt
+		osint/google_dorks.sh -d $domain -o osint/dorks.txt
 		end_func "Results are saved in $domain/osint/dorks.txt" ${FUNCNAME[0]}
 	else
 		if [ "$GOOGLE_DORKS" = false ] || [ "$OSINT" = false ]; then
@@ -33,13 +157,41 @@ function google_dorks(){
 	fi
 }
 
+# Done in v3
+# function github_dorks(){
+# 	if { [ ! -f "$called_fn_dir/.${FUNCNAME[0]}" ] || [ "$DIFF" = true ]; } && [ "$GITHUB_DORKS" = true ] && [ "$OSINT" = true ]; then
+# 		start_func ${FUNCNAME[0]} "Github Dorks in process"
+# 		if [ -s "${GITHUB_TOKENS}" ]; then
+# 			if [ "$DEEP" = true ]; then
+# 				gitdorks_go -gd $tools/gitdorks_go/Dorks/medium_dorks.txt -nws 20 -target $domain -tf "${GITHUB_TOKENS}" -ew 3 | anew -q osint/gitdorks.txt
+# 			else
+# 				gitdorks_go -gd $tools/gitdorks_go/Dorks/smalldorks.txt -nws 20 -target $domain -tf "${GITHUB_TOKENS}" -ew 3 | anew -q osint/gitdorks.txt
+# 			fi
+# 		else
+# 			printf "\n${bred} Required file ${GITHUB_TOKENS} not exists or empty${reset}\n"
+# 		fi
+# 		end_func "Results are saved in $domain/osint/gitdorks.txt" ${FUNCNAME[0]}
+# 	else
+# 		if [ "$GITHUB_DORKS" = false ] || [ "$OSINT" = false ]; then
+# 			printf "\n${yellow} ${FUNCNAME[0]} skipped in this mode or defined in reconftw.cfg ${reset}\n"
+# 		else
+# 			printf "${yellow} ${FUNCNAME[0]} is already processed, to force executing ${FUNCNAME[0]} delete\n    $called_fn_dir/.${FUNCNAME[0]} ${reset}\n\n"
+# 		fi
+# 	fi
+# }
+
 function github_dorks(){
 	if { [ ! -f "$called_fn_dir/.${FUNCNAME[0]}" ] || [ "$DIFF" = true ]; } && [ "$GITHUB_DORKS" = true ] && [ "$OSINT" = true ]; then
 		start_func ${FUNCNAME[0]} "Github Dorks in process"
-		if [ "$DEEP" = true ]; then
-			modules/osint/github_dorks.sh -g $tools/gitdorks_go/Dorks/medium_dorks.txt -d $domain -t "${GITHUB_TOKENS}" | anew -q osint/gitdorks.txt
+		if [ -s "${GITHUB_TOKENS}" ]; then
+			if [ "$DEEP" = true ]; then
+				osint/github_dorks.sh -d $domain -t "${GITHUB_TOKENS}" -g $tools/gitdorks_go/Dorks/medium_dorks.txt
+			else
+				osint/github_dorks.sh -d $domain -t "${GITHUB_TOKENS}" -g $tools/gitdorks_go/Dorks/smalldorks.txt
+			fi
+			mv github_dorks.txt osint/github_dorks.txt
 		else
-			modules/osint/github_dorks.sh -g $tools/gitdorks_go/Dorks/smalldorks.txt -d $domain -t "${GITHUB_TOKENS}" | anew -q osint/gitdorks.txt
+			printf "\n${bred} Required file ${GITHUB_TOKENS} not exists or empty${reset}\n"
 		fi
 		end_func "Results are saved in $domain/osint/gitdorks.txt" ${FUNCNAME[0]}
 	else
@@ -51,10 +203,35 @@ function github_dorks(){
 	fi
 }
 
+# Done in v3
+# function github_repos(){
+# 	if { [ ! -f "$called_fn_dir/.${FUNCNAME[0]}" ] || [ "$DIFF" = true ]; } && [ "$GITHUB_REPOS" = true ] && [ "$OSINT" = true ]; then
+# 		start_func ${FUNCNAME[0]} "Github Repos analysis in process"
+# 
+# 		if [ -s "${GITHUB_TOKENS}" ]; then
+# 			GH_TOKEN=$(cat ${GITHUB_TOKENS} | head -1)
+# 			echo $domain | unfurl format %r > .tmp/company_name.txt
+# 			enumerepo -token-string ${GH_TOKEN} -usernames .tmp/company_name.txt -o .tmp/company_repos.txt 2>>"$LOGFILE" &>/dev/null
+# 			[ -s .tmp/company_repos.txt ] && cat .tmp/company_repos.txt | jq -r '.[].repos[]|.url' > .tmp/company_repos_url.txt 2>>"$LOGFILE" &>/dev/null
+# 			rush -i .tmp/company_repos_url.txt -j ${INTERLACE_THREADS} "trufflehog git {} -j | jq -c >> osint/github_company_secrets.json" 2>>"$LOGFILE" &>/dev/null
+# 		else
+# 			printf "\n${bred} Required file ${GITHUB_TOKENS} not exists or empty${reset}\n"
+# 		fi
+# 		end_func "Results are saved in $domain/osint/github_company_secrets.json" ${FUNCNAME[0]}
+# 	else
+# 		if [ "$GITHUB_REPOS" = false ] || [ "$OSINT" = false ]; then
+# 			printf "\n${yellow} ${FUNCNAME[0]} skipped in this mode or defined in reconftw.cfg ${reset}\n"
+# 		else
+# 			printf "${yellow} ${FUNCNAME[0]} is already processed, to force executing ${FUNCNAME[0]} delete\n    $called_fn_dir/.${FUNCNAME[0]} ${reset}\n\n"
+# 		fi
+# 	fi
+# }
+
 function github_repos(){
 	if { [ ! -f "$called_fn_dir/.${FUNCNAME[0]}" ] || [ "$DIFF" = true ]; } && [ "$GITHUB_REPOS" = true ] && [ "$OSINT" = true ]; then
 		start_func ${FUNCNAME[0]} "Github Repos analysis in process"
-		modules/osint/github_repos.sh -d $domain -t "${GITHUB_TOKENS}" -o osint
+		osint/github_repos.sh -d $domain
+		mv github_company_secrets.json osint/github_company_secrets.json
 		end_func "Results are saved in $domain/osint/github_company_secrets.json" ${FUNCNAME[0]}
 	else
 		if [ "$GITHUB_REPOS" = false ] || [ "$OSINT" = false ]; then
@@ -65,12 +242,34 @@ function github_repos(){
 	fi
 }
 
+# Done in v3
+# function metadata(){
+# 	if { [ ! -f "$called_fn_dir/.${FUNCNAME[0]}" ] || [ "$DIFF" = true ]; } && [ "$METADATA" = true ] && [ "$OSINT" = true ] && ! [[ $domain =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9] ]]; then
+# 		start_func ${FUNCNAME[0]} "Scanning metadata in public files"
+# 		metafinder -d "$domain" -l $METAFINDER_LIMIT -o osint -go -bi -ba 2>>"$LOGFILE" &>/dev/null
+# 		mv "osint/${domain}/"*".txt" "osint/" 2>>"$LOGFILE"
+# 		rm -rf "osint/${domain}" 2>>"$LOGFILE"
+# 		end_func "Results are saved in $domain/osint/[software/authors/metadata_results].txt" ${FUNCNAME[0]}
+# 	else
+# 		if [ "$METADATA" = false ] || [ "$OSINT" = false ]; then
+# 			printf "\n${yellow} ${FUNCNAME[0]} skipped in this mode or defined in reconftw.cfg ${reset}\n"
+# 		elif [[ $domain =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9] ]]; then
+# 			return
+# 		else
+# 			if [ "$METADATA" = false ] || [ "$OSINT" = false ]; then
+# 				printf "\n${yellow} ${FUNCNAME[0]} skipped in this mode or defined in reconftw.cfg ${reset}\n"
+# 			else
+# 				printf "${yellow} ${FUNCNAME[0]} is already processed, to force executing ${FUNCNAME[0]} delete\n    $called_fn_dir/.${FUNCNAME[0]} ${reset}\n\n"
+# 			fi
+# 		fi
+# 	fi
+# }
+
 function metadata(){
 	if { [ ! -f "$called_fn_dir/.${FUNCNAME[0]}" ] || [ "$DIFF" = true ]; } && [ "$METADATA" = true ] && [ "$OSINT" = true ] && ! [[ $domain =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9] ]]; then
 		start_func ${FUNCNAME[0]} "Scanning metadata in public files"
-		metafinder -d "$domain" -l $METAFINDER_LIMIT -o osint -go -bi -ba 2>>"$LOGFILE" &>/dev/null
-		mv "osint/${domain}/"*".txt" "osint/" 2>>"$LOGFILE"
-		rm -rf "osint/${domain}" 2>>"$LOGFILE"
+		osint/metadata.sh -d "$domain"
+		mv authors.txt software.txt result.txt 2&>/dev/null osint/
 		end_func "Results are saved in $domain/osint/[software/authors/metadata_results].txt" ${FUNCNAME[0]}
 	else
 		if [ "$METADATA" = false ] || [ "$OSINT" = false ]; then
@@ -87,10 +286,56 @@ function metadata(){
 	fi
 }
 
+# Done in v3
+# function emails(){
+# 	if { [ ! -f "$called_fn_dir/.${FUNCNAME[0]}" ] || [ "$DIFF" = true ]; } && [ "$EMAILS" = true ] && [ "$OSINT" = true ] && ! [[ $domain =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9] ]]; then
+# 		start_func ${FUNCNAME[0]} "Searching emails/users/passwords leaks"
+# 		emailfinder -d $domain 2>>"$LOGFILE" | anew -q .tmp/emailfinder.txt
+# 		[ -s ".tmp/emailfinder.txt" ] && cat .tmp/emailfinder.txt | grep "@" | grep -iv "|_" | anew -q osint/emails.txt
+# 		cd "$tools/theHarvester" || { echo "Failed to cd directory in ${FUNCNAME[0]} @ line ${LINENO}"; exit 1; }
+# 		python3 theHarvester.py -d $domain -b all -f $dir/.tmp/harvester.json 2>>"$LOGFILE" &>/dev/null
+# 		cd "$dir" || { echo "Failed to cd to $dir in ${FUNCNAME[0]} @ line ${LINENO}"; exit 1; }
+# 		if [ -s ".tmp/harvester.json" ]; then
+# 			cat .tmp/harvester.json | jq -r 'try .emails[]' 2>/dev/null | anew -q osint/emails.txt
+# 			cat .tmp/harvester.json | jq -r 'try .linkedin_people[]' 2>/dev/null | anew -q osint/employees.txt
+# 			cat .tmp/harvester.json | jq -r 'try .linkedin_links[]' 2>/dev/null | anew -q osint/linkedin.txt
+# 		fi
+# 		h8mail -t $domain -q domain --loose -c $tools/h8mail_config.ini -j .tmp/h8_results.json 2>>"$LOGFILE" &>/dev/null
+# 		[ -s ".tmp/h8_results.json" ] && cat .tmp/h8_results.json | jq -r '.targets[0] | .data[] | .[]' | awk '{print $12}' | anew -q osint/h8mail.txt
+# 
+# 		PWNDB_STATUS=$(timeout 30s curl -Is --socks5-hostname localhost:9050 http://pwndb2am4tzkvold.onion | grep HTTP | cut -d ' ' -f2)
+# 
+# 		if [ "$PWNDB_STATUS" = 200 ]; then
+# 			cd "$tools/pwndb" || { echo "Failed to cd directory in ${FUNCNAME[0]} @ line ${LINENO}"; exit 1; }
+# 			python3 pwndb.py --target "@${domain}" | sed '/^[-]/d' | anew -q $dir/osint/passwords.txt
+# 			cd "$dir" || { echo "Failed to cd directory in ${FUNCNAME[0]} @ line ${LINENO}"; exit 1; }
+# 			[ -s "osint/passwords.txt" ] && sed -r -i "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g" osint/passwords.txt
+# 			[ -s "osint/passwords.txt" ] && sed -i '1,2d' osint/passwords.txt
+# 		else
+# 			text="${yellow}\n pwndb is currently down :(\n\n Check xjypo5vzgmo7jca6b322dnqbsdnp3amd24ybx26x5nxbusccjkm4pwid.onion${reset}\n"
+# 			printf "${text}" && printf "${text}" | $NOTIFY
+# 		fi
+# 		end_func "Results are saved in $domain/osint/[emails/users/h8mail/passwords].txt" ${FUNCNAME[0]}
+# 	else
+# 		if [ "$EMAILS" = false ] || [ "$OSINT" = false ]; then
+# 			printf "\n${yellow} ${FUNCNAME[0]} skipped in this mode or defined in reconftw.cfg ${reset}\n"
+# 		elif [[ $domain =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9] ]]; then
+# 			return
+# 		else
+# 			if [ "$EMAILS" = false ] || [ "$OSINT" = false ]; then
+# 				printf "\n${yellow} ${FUNCNAME[0]} skipped in this mode or defined in reconftw.cfg ${reset}\n"
+# 			else
+# 				printf "${yellow} ${FUNCNAME[0]} is already processed, to force executing ${FUNCNAME[0]} delete\n    $called_fn_dir/.${FUNCNAME[0]} ${reset}\n\n"
+# 			fi
+# 		fi
+# 	fi
+# }
+
 function emails(){
 	if { [ ! -f "$called_fn_dir/.${FUNCNAME[0]}" ] || [ "$DIFF" = true ]; } && [ "$EMAILS" = true ] && [ "$OSINT" = true ] && ! [[ $domain =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9] ]]; then
 		start_func ${FUNCNAME[0]} "Searching emails/users/passwords leaks"
-		modules/osint/emails.sh -d $domain -o osint
+		osint/emails.sh -d $domain
+		mv emails.txt employees.txt linkedin.txt 2&>/dev/null osint/
 		end_func "Results are saved in $domain/osint/[emails/users/h8mail/passwords].txt" ${FUNCNAME[0]}
 	else
 		if [ "$EMAILS" = false ] || [ "$OSINT" = false ]; then
@@ -133,14 +378,9 @@ function domain_info(){
 function ip_info(){
 	if { [ ! -f "$called_fn_dir/.${FUNCNAME[0]}" ] || [ "$DIFF" = true ]; } && [ "$IP_INFO" = true ] && [ "$OSINT" = true ] && [[ $domain =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9] ]]; then
 		start_func ${FUNCNAME[0]} "Searching ip info"
-		if [ -n "$WHOISXML_API" ]; then
-			curl "https://reverse-ip.whoisxmlapi.com/api/v1?apiKey=${WHOISXML_API}&ip=${domain}" 2>/dev/null | jq -r '.result[].name' 2>>"$LOGFILE" | sed -e "s/$/ ${ip}/" | anew -q osint/ip_${domain}_relations.txt
-			curl "https://www.whoisxmlapi.com/whoisserver/WhoisService?apiKey=${WHOISXML_API}&domainName=${domain}&outputFormat=json&da=2&registryRawText=1&registrarRawText=1&ignoreRawTexts=1" 2>/dev/null | jq 2>>"$LOGFILE" | anew -q osint/ip_${domain}_whois.txt
-			curl "https://ip-geolocation.whoisxmlapi.com/api/v1?apiKey=${WHOISXML_API}&ipAddress=${domain}" 2>/dev/null | jq -r '.ip,.location' 2>>"$LOGFILE" | anew -q osint/ip_${domain}_location.txt
-			end_func "Results are saved in $domain/osint/ip_[domain_relations|whois|location].txt" ${FUNCNAME[0]}
-		else
-			printf "\n${yellow} No WHOISXML_API var defined, skipping function ${reset}\n"
-		fi
+		osint/ip_info.sh -t $domain
+		mv ip_${domain}_relations.txt ip_${domain}_whois.txt ip_${domain}_location.txt 2>/dev/null osint/
+		end_func "Results are saved in $domain/osint/ip_[domain_relations|whois|location].txt" ${FUNCNAME[0]}
 	else
 		if [ "$IP_INFO" = false ] || [ "$OSINT" = false ]; then
 			printf "\n${yellow} ${FUNCNAME[0]} skipped in this mode or defined in reconftw.cfg ${reset}\n"
@@ -219,7 +459,27 @@ function subdomains_full(){
 function sub_passive(){
 	if { [ ! -f "$called_fn_dir/.${FUNCNAME[0]}" ] || [ "$DIFF" = true ]; } && [ "$SUBPASSIVE" = true ]; then
 		start_subfunc ${FUNCNAME[0]} "Running : Passive Subdomain Enumeration"
-		modules/subdomains/sub_passive.sh -d $domain -o .tmp
+		if [ ! "$AXIOM" = true ]; then
+			[[ $RUNAMASS == true ]] && amass enum -passive -d $domain -config $AMASS_CONFIG -timeout $AMASS_ENUM_TIMEOUT -json .tmp/amass_json.json 2>>"$LOGFILE" &>/dev/null
+			[ -s ".tmp/amass_json.json" ] && cat .tmp/amass_json.json | jq -r '.name' | anew -q .tmp/amass_psub.txt
+			[[ $RUNSUBFINDER == true ]] && subfinder -all -d $domain -silent | anew -q .tmp/amass_psub.txt
+		else
+			echo $domain > .tmp/amass_temp_axiom.txt
+			[[ $RUNAMASS == true ]] && axiom-scan .tmp/amass_temp_axiom.txt -m amass -passive -o .tmp/amass_axiom.txt $AXIOM_EXTRA_ARGS 2>>"$LOGFILE" &>/dev/null
+			[[ $RUNSUBFINDER == true ]] && axiom-scan .tmp/amass_temp_axiom.txt -m subfinder -all -silent -o .tmp/subfinder_axiom.txt $AXIOM_EXTRA_ARGS 2>>"$LOGFILE" &>/dev/null
+			cat .tmp/amass_axiom.txt .tmp/subfinder_axiom.txt 2>>"$LOGFILE" | anew -q .tmp/amass_psub.txt
+		fi
+		if [ -s "${GITHUB_TOKENS}" ]; then
+			if [ "$DEEP" = true ]; then
+				github-subdomains -d $domain -t $GITHUB_TOKENS -o .tmp/github_subdomains_psub.txt 2>>"$LOGFILE" &>/dev/null
+			else
+				github-subdomains -d $domain -k -q -t $GITHUB_TOKENS -o .tmp/github_subdomains_psub.txt 2>>"$LOGFILE" &>/dev/null
+			fi
+		fi
+		if [ "$INSCOPE" = true ]; then
+			check_inscope .tmp/amass_psub.txt 2>>"$LOGFILE" &>/dev/null
+			check_inscope .tmp/github_subdomains_psub.txt 2>>"$LOGFILE" &>/dev/null
+		fi
 		NUMOFLINES=$(find .tmp -type f -iname "*_psub.txt" -exec cat {} + | sed "s/*.//" | anew .tmp/passive_subs.txt | sed '/^$/d' | wc -l)
 		end_subfunc "${NUMOFLINES} new subs (passive)" ${FUNCNAME[0]}
 	else
@@ -2043,7 +2303,7 @@ function start(){
 	notification "Recon succesfully started on ${domain}" good
 	[ "$SOFT_NOTIFICATION" = true ] && echo "Recon succesfully started on ${domain}" | notify -silent
 	printf "${bgreen}#######################################################################${reset}\n"
-	modules/utils/tools_installed.sh
+	tools_installed
 
 	#[[ -n "$domain" ]] && ipcidr_target $domain
 
@@ -2764,7 +3024,7 @@ startdir=${PWD}
 
 banner
 
-modules/utils/check_version.sh
+check_version
 
 startdir=${PWD}
 if [ -n "$list" ]; then

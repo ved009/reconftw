@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source $HOME/.reconftw/reconftw.cfg	
+
 # Array of repos
 repos=(
 	"GOPATH"
@@ -72,9 +74,7 @@ for gotool in "${gotools[@]}"; do
     which $gotool &>/dev/null || { printf "${bred} [*] ${gotool} [NO]${reset}\n"; allinstalled=false;}
 done
 
-if test -d ~/nuclei-templates; then
-    printf "${bgreen} [*] Nuclei templates [YES]${reset}\n"
-else
+if ! test -d ~/nuclei-templates; then
     printf "${bred} [*] Nuclei templates [NO]${reset}\n"; allinstalled=false;
 fi
 

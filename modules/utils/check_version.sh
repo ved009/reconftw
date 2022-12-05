@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source $HOME/.reconftw/reconftw.cfg	
+
 # check if the 'git' command is available
 if ! command -v git &>/dev/null; then
   # display error message if 'git' is not available

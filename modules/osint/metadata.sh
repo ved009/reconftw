@@ -9,9 +9,9 @@ name=`basename "$0"`
 # check if the -h flag is provided
 if [[ "$1" == "-h" ]]; then
 	# display improved help information
-	echo "Usage: ${name} -d domain"
+	echo "Usage: ${name} -d domain -o output"
 	echo ""
-	echo "Searches emails, employees names and linkedin profiles for the given domain and saves the output in the specified file."
+	echo "Runs metafinder in order to find metadata in indexed files, returns 'authors.txt', 'software.txt' and 'result.txt'"
 	echo ""
 	echo "Options:"
 	echo "  -d, --domain          Target domain"
@@ -21,7 +21,6 @@ fi
 
 # initialize variables for the domain and output folder
 domain=""
-output=""
 
 # process command line arguments
 while [[ $# -gt 0 ]]; do
@@ -42,7 +41,7 @@ done
 # check if a domain was provided
 if [[ -z "$domain" ]]; then
 	# display error message if no domain is provided
-	echo "Error: No domain provided. Use ${name} -h for usage information."
+	echo "Error: No arg provided. Use ${name} -h for usage information."
 	exit 1
 fi
 
@@ -53,18 +52,6 @@ if [[ ! -d "$tools" ]]; then
 	exit 1
 fi
 
-mkdir -p .tmp
-
 # run the tool for the given args and save the output in the specified folder
-emailfinder -d $domain 2>/dev/null > .tmp/emailfinder.txt
-[ -s ".tmp/emailfinder.txt" ] && cat .tmp/emailfinder.txt | grep "@" | grep -iv "|_" > emails.txt
-
-pushd "$tools/theHarvester" || { echo "Failed to cd directory in ${FUNCNAME[0]} @ line ${LINENO}"; exit 1; }
-python3 theHarvester.py -d $domain -b all -f .tmp/harvester.json 2>>"$LOGFILE" &>/dev/null
-popd || { echo "Failed to cd to the original directory in ${FUNCNAME[0]} @ line ${LINENO}"; exit 1; }
-
-if [ -s ".tmp/harvester.json" ]; then
-	cat .tmp/harvester.json | jq -r 'try .emails[]' 2>/dev/null | anew -q emails.txt
-	cat .tmp/harvester.json | jq -r 'try .linkedin_people[]' 2>/dev/null > employees.txt
-	cat .tmp/harvester.json | jq -r 'try .linkedin_links[]' 2>/dev/null > linkedin.txt
-fi
+metafinder -d "$domain" -l $METAFINDER_LIMIT -o .tmp -go -bi -ba >/dev/null
+cp -r .tmp/visma.com/*.txt .
