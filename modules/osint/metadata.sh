@@ -9,7 +9,7 @@ name=`basename "$0"`
 # check if the -h flag is provided
 if [[ "$1" == "-h" ]]; then
 	# display improved help information
-	echo "Usage: ${name} -d domain -o output"
+	echo "Usage: ${name} -d domain"
 	echo ""
 	echo "Runs metafinder in order to find metadata in indexed files, returns 'authors.txt', 'software.txt' and 'result.txt'"
 	echo ""
@@ -19,7 +19,7 @@ if [[ "$1" == "-h" ]]; then
 	exit 0
 fi
 
-# initialize variables for the domain and output folder
+# initialize variables for the domain
 domain=""
 
 # process command line arguments
@@ -52,6 +52,6 @@ if [[ ! -d "$tools" ]]; then
 	exit 1
 fi
 
-# run the tool for the given args and save the output in the specified folder
-metafinder -d "$domain" -l $METAFINDER_LIMIT -o .tmp -go -bi -ba >/dev/null
+# run the tool for the given args
+metafinder -d "$domain" -l $METAFINDER_LIMIT -o .tmp -go -bi -ba > /dev/null 2>&1
 cp -r .tmp/visma.com/*.txt .

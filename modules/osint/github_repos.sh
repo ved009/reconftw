@@ -39,8 +39,8 @@ while [[ $# -gt 0 ]]; do
 			shift # past argument
 			shift # past value
 			;;
-	 -o|--output-file)
-			output_file="$2"
+	 -o|--output)
+			output="$2"
 			shift # past argument
 			shift # past value
 			;;
@@ -66,15 +66,15 @@ if [[ -z "$tokens" ]]; then
 fi
 
 # check if an output file was provided
-if [[ -z "$output_file" ]]; then
+if [[ -z "$output" ]]; then
 	# use the default output file if no output folder was provided
-	output_file="github_company_secrets.json"
+	output="github_company_secrets.json"
 fi
 
 # run the tool for the given args
 mkdir -p .tmp
 GH_TOKEN=$(cat ${GITHUB_TOKENS} | head -1)
 echo $domain | unfurl format %r > .tmp/company_name.txt
-enumerepo -token-string ${GH_TOKEN} -usernames .tmp/company_name.txt -o .tmp/company_repos.txt 2>>"$LOGFILE" &>/dev/null
-[ -s .tmp/company_repos.txt ] && cat .tmp/company_repos.txt | jq -r '.[].repos[]|.url' > .tmp/company_repos_url.txt 2>>"$LOGFILE" &>/dev/null
-rush -i .tmp/company_repos_url.txt -j ${INTERLACE_THREADS} "trufflehog git {} -j | jq -c >> github_company_secrets.json" 2>>"$LOGFILE" &>/dev/null
+enumerepo -token-string ${GH_TOKEN} -usernames .tmp/company_name.txt -o .tmp/company_repos.txt > /dev/null 2>&1
+[ -s .tmp/company_repos.txt ] && cat .tmp/company_repos.txt | jq -r '.[].repos[]|.url' > .tmp/company_repos_url.txt > /dev/null 2>&1
+rush -i .tmp/company_repos_url.txt -j ${INTERLACE_THREADS} "trufflehog git {} -j | jq -c >> ${output}" > /dev/null 2>&1

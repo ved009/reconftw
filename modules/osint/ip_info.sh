@@ -19,7 +19,7 @@ if [[ "$1" == "-h" ]]; then
 	exit 0
 fi
 
-# initialize variables for the domain and output folder
+# initialize variables for the domain
 domain=""
 
 # process command line arguments

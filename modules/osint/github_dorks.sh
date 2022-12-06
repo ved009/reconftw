@@ -17,7 +17,7 @@ if [[ "$1" == "-h" ]]; then
 	echo "  -d, --domain			Target domain"
 	echo "  -t, --tokens			File containing GitHub tokens"
 	echo "  -g, --gitdorks		File containing GitHub dorks"
-	echo "  -o, --output-file		File to save the output in (default: github_dorks.txt)"
+	echo "  -o, --output		File to save the output in (default: github_dorks.txt)"
 	echo "  -h, --help			Shows this help message"
 	exit 0
 fi

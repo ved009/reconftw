@@ -11,7 +11,7 @@ if [[ "$1" == "-h" ]]; then
 	# display improved help information
 	echo "Usage: ${name} -d domain"
 	echo ""
-	echo "Searches emails, employees names and linkedin profiles for the given domain and saves the output in the specified file."
+	echo "Searches emails, employees names and linkedin profiles for the given domain"
 	echo ""
 	echo "Options:"
 	echo "  -d, --domain          Target domain"
@@ -19,9 +19,8 @@ if [[ "$1" == "-h" ]]; then
 	exit 0
 fi
 
-# initialize variables for the domain and output folder
+# initialize variables for the domain
 domain=""
-output=""
 
 # process command line arguments
 while [[ $# -gt 0 ]]; do
@@ -55,12 +54,12 @@ fi
 
 mkdir -p .tmp
 
-# run the tool for the given args and save the output in the specified folder
+# run the tool for the given args
 emailfinder -d $domain 2>/dev/null > .tmp/emailfinder.txt
 [ -s ".tmp/emailfinder.txt" ] && cat .tmp/emailfinder.txt | grep "@" | grep -iv "|_" > emails.txt
 
 pushd "$tools/theHarvester" || { echo "Failed to cd directory in ${FUNCNAME[0]} @ line ${LINENO}"; exit 1; }
-python3 theHarvester.py -d $domain -b all -f .tmp/harvester.json 2>>"$LOGFILE" &>/dev/null
+python3 theHarvester.py -d $domain -b all -f .tmp/harvester.json > /dev/null 2>&1
 popd || { echo "Failed to cd to the original directory in ${FUNCNAME[0]} @ line ${LINENO}"; exit 1; }
 
 if [ -s ".tmp/harvester.json" ]; then
