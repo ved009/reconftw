@@ -29,7 +29,7 @@ while [[ $# -gt 0 ]]; do
 	key="$1"
 	case $key in
 		-i|--input)
-			domain="$2"
+			input="$2"
 			shift # past argument
 			shift # past value
 			;;

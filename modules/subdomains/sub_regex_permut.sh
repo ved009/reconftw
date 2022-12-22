@@ -11,7 +11,7 @@ if [[ "$1" == "-h" ]]; then
 	# display improved help information
 	echo "Usage: ${name} -i input -o output"
 	echo ""
-	echo "Performs subdomains permutations given subdomains and saves the results in the specified file."
+	echo "Performs subdomains permutations by regex patterns given subdomains and saves the results in the specified file."
 	echo ""
 	echo "Options:"
 	echo "  -i, --input				Input file to resolve"

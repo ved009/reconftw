@@ -29,7 +29,7 @@ while [[ $# -gt 0 ]]; do
 	key="$1"
 	case $key in
 		-i|--input)
-			domain="$2"
+			input="$2"
 			shift # past argument
 			shift # past value
 			;;
@@ -46,9 +46,9 @@ while [[ $# -gt 0 ]]; do
 done
 
 # check if a domain was provided
-if [[ -z "$domain" ]]; then
+if [[ -z "$input" ]]; then
 	# display error message if no domain is provided
-	echo "Error: No domain provided. Use ${name} -h for usage information."
+	echo "Error: No input provided. Use ${name} -h for usage information."
 	exit 1
 fi
 

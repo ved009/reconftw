@@ -9,13 +9,14 @@ name=`basename "$0"`
 # check if the -h flag is provided
 if [[ "$1" == "-h" ]]; then
 	# display improved help information
-	echo "Usage: ${name} -i input -o output"
+	echo "Usage: ${name} -i input -p ports -o output"
 	echo ""
-	echo "Runs subdomains resolution given file and saves the results in the specified file."
+	echo "Performs web probing on multiple ports for web discovery on subdomains file and saves the results in the specified file."
 	echo ""
 	echo "Options:"
-	echo "  -i, --input				Input file to resolve"
-	echo "  -o, --output			File to save the results in (default: subs_active.txt)"
+	echo "  -i, --input				Subdomains input file"
+	echo "  -p, --ports				Ports list to scan (default: 80,443)"
+	echo "  -o, --output			File to save the results in (default: web_info.txt)"
 	echo "  -h, --help				Shows this help message"
 	exit 0
 fi
@@ -23,6 +24,7 @@ fi
 # initialize variables for the domain and output
 input=""
 output=""
+ports=""
 
 # process command line arguments
 while [[ $# -gt 0 ]]; do
@@ -35,6 +37,11 @@ while [[ $# -gt 0 ]]; do
 			;;
 		-o|--output)
 			output="$2"
+			shift # past argument
+			shift # past value
+			;;
+		-p|--ports)
+			ports="$2"
 			shift # past argument
 			shift # past value
 			;;
@@ -52,7 +59,6 @@ if [[ -z "$input" ]]; then
 	exit 1
 fi
 
-# check if a domain was provided
 if [[ -s "$input" ]]; then
 	# display error message if no domain is provided
 	echo "Error: File not exists or is empty."
@@ -62,28 +68,28 @@ fi
 # check if an output folder was provided
 if [[ -z "$output" ]]; then
 	# use the default output folder if no output folder was provided
-	output="subs_active.txt"
+	output="web_info.txt"
+fi
+
+# check if a domain was provided
+if [[ -z "$ports" ]]; then
+	# display error message if no domain is provided
+	ports="80,443"
 fi
 
 # check if the tools directory exists
 if [[   ! -d "$tools" ]]; then
 	# display error message if the tools directory does not exist
-	echo "Error: 'tools' directory not found. Make sure it exists and is in the current working directory."
+	echo "Error: 'tools' directory not found. Make sure it exists and is in th e current working directory."
 	exit 1
 fi
 
-mkdir -p .tmp
-
 if [ ! "$AXIOM" = true ]; then
-	resolvers_update_quick_local
-	puredns resolve $input -w $output -r $resolvers --resolvers-trusted $resolvers_trusted -l $PUREDNS_PUBLIC_LIMIT --rate-limit-trusted $PUREDNS_TRUSTED_LIMIT --wildcard-tests $PUREDNS_WILDCARDTEST_LIMIT --wildcard-batch $PUREDNS_WILDCARDBATCH_LIMIT &>/dev/null
+	if [ -s "subdomains/subdomains.txt" ]; then
+		cat subdomains/subdomains.txt | httpx -p $ports -threads $HTTPX_THREADS -timeout $HTTPX_TIMEOUT -silent -retries 2 -random-agent -status-code -title -web-server -tech-detect -location -follow-host-redirects -json -no-color -o $output 2>>"$LOGFILE" &>/dev/null
+	fi
 else
-	resolvers_update_quick_axiom
-	axiom-scan $input -m puredns-resolve -r /home/op/lists/resolvers.txt --resolvers-trusted /home/op/lists/resolvers_trusted.txt --wildcard-tests $PUREDNS_WILDCARDTEST_LIMIT --wildcard-batch $PUREDNS_WILDCARDBATCH_LIMIT -o $output $AXIOM_EXTRA_ARGS 2>>"$LOGFILE" &>/dev/null
-fi
-echo $domain | dnsx -retry 3 -silent -r $resolvers_trusted 2>>"$LOGFILE" | anew -q $output
-if [ "$DEEP" = true ]; then
-	cat .tmp/subdomains_tmp.txt | tlsx -san -cn -silent -ro -c $TLSX_THREADS -p $TLS_PORTS | anew -q $output
-else
-	cat .tmp/subdomains_tmp.txt | tlsx -san -cn -silent -ro -c $TLSX_THREADS | anew -q $output
+	if [ -s "subdomains/subdomains.txt" ]; then
+		axiom-scan subdomains/subdomains.txt -m httpx -p $UNCOMMON_PORTS_WEB -threads $HTTPX_THREADS -timeout $HTTPX_TIMEOUT -silent -retries 2 -random-agent -status-code -title -web-server -tech-detect -location -follow-host-redirects -json -no-color -o $output $AXIOM_EXTRA_ARGS 2>>"$LOGFILE" &>/dev/null
+	fi
 fi
